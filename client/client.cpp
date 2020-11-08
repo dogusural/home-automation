@@ -16,7 +16,7 @@ int main()
 
     //	Create a hint structure for the server we're connecting with
     int port = 54000;
-    string ipAddress = "127.0.0.1";
+    string ipAddress = "192.168.0.74";
 
     sockaddr_in hint;
     hint.sin_family = AF_INET;
