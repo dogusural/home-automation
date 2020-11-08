@@ -7,8 +7,10 @@
 #include <string.h>
 #include <string>
 #include <mutex>
+#include <pigpio.h>
 
 #define MAX_THREAD_NUMBER 24
+#define RELAY_PIN 14
 std::mutex network_mutex;
 
 typedef struct
@@ -67,6 +69,13 @@ void process(connection_t * conn_ptr)
 
 int main(int argc, char ** argv)
 {
+	if (gpioInitialise() < 0)
+	{
+		fprintf(stderr, "pigpio initialisation failed\n");
+		return 1;
+	}
+	gpioSetMode(RELAY_PIN, PI_OUTPUT);
+
 	int sock = -1;
 	struct sockaddr_in address;
 	int port;
@@ -132,6 +141,15 @@ int main(int argc, char ** argv)
 			thread[thread_indice++] = std::thread(process, connection);
 			
 		}
+		
+		gpioWrite(RELAY_PIN, 1); /* on */
+
+		time_sleep(1);
+
+		gpioWrite(RELAY_PIN, 0); /* off */
+
+		time_sleep(1);
+
 
 		if (thread_indice == MAX_THREAD_NUMBER)
 		{
