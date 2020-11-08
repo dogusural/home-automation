@@ -29,7 +29,7 @@ INCLUDE = \
 
 
 
-CFLAGS = -O0 --sysroot=$(SYSROOT) -mfloat-abi=hard -march=armv8-a+crc -mfpu=neon-fp-armv8 -mtune=cortex-a53 -pedantic
+CFLAGS = -O0 --sysroot=$(SYSROOT) -mfloat-abi=hard -march=armv8-a+crc -mfpu=neon-fp-armv8 -mtune=cortex-a53 -pedantic -std=c++17
 
 
 FLAGS = $(INCLUDE) -L${LIB_DIR} $(LIBS) $(DEFINES)
